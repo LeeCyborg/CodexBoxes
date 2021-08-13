@@ -3,17 +3,20 @@
 
 #include <Servo.h>
 Servo latch;
-#define PIN 6
+const byte BUTTON_PINS[6] = { 2, 3, 4, 5, 6, 7};
 #define NUMPIXELS 1
-#define buttonPin 2
+#define knife 2
 bool state = false;
 
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(NUMPIXELS, 10, NEO_RGB + NEO_KHZ800);
 void setup() {
   pixels.begin();
   latch.attach(9);
   Serial.begin(9600);
-  pinMode(buttonPin, INPUT_PULLUP);
+  for (byte i = 0; i < 5; i++){
+    pinMode(BUTTON_PINS[i], INPUT_PULLUP);
+  }
+  pinMode(knife, INPUT_PULLUP);
   latch.write(0);
 }
 
