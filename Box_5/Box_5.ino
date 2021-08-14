@@ -1,11 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 #include <Servo.h>
 Servo latch;
-const byte KNOB_PINS[4] = { 0, 1, 2, 3};
-const byte LIGHT_PINS[4] = { 0, 1, 2, 3};
-bool STATE[4] = { false, false, false, false};
-int KEY[4] = {700, 800, 500, 900};
-#define NUMPIXELS 4
+const byte KNOB_PINS[5] = { 0, 1, 2, 3, 4};
+const byte LIGHT_PINS[5] = { 0, 1, 2, 3, 4};
+bool STATE[5] = { false, false, false, false, false};
+int KEY[5] = {700, 400, 500, 600, 500};
+#define NUMPIXELS 5
 #define tolerance 50
 bool done = false;
 Adafruit_NeoPixel pixels(NUMPIXELS, 7, NEO_RGB + NEO_KHZ800);
@@ -23,7 +23,7 @@ void loop() {
 
 void CheckPins() {
   //Serial.println(analogRead(0));
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     if ((analogRead(KNOB_PINS[i]) <= (KEY[i] + tolerance)) &&
       (analogRead(KNOB_PINS[i]) >= (KEY[i] - tolerance)))
     {
@@ -36,7 +36,7 @@ void CheckPins() {
   }
 }
 void error() {
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     if (STATE[i] == true) {
       pixels.setPixelColor(i, pixels.Color(0, 255, 0));
       pixels.show();
@@ -51,7 +51,8 @@ void activate() {
   if (STATE[0] == true &&
       STATE[1] == true &&
       STATE[2] == true &&
-      STATE[3] == true ) {
+      STATE[3] == true &&
+      STATE[4] == true) {
     latch.write(90);
     Serial.println("DONE");
   }
