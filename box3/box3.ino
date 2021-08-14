@@ -3,9 +3,9 @@
 
 #include <Servo.h>
 Servo latch;
-const byte BUTTON_PINS[6] = { 2, 3, 4, 5;
-const byte LIGHT_PINS[6] = { 0, 1, 2, 3;
-bool STATE[6] = { false, false, false, false;
+const byte BUTTON_PINS[4] = { 2, 3, 4, 5};
+const byte LIGHT_PINS[4] = { 0, 1, 2, 3};
+bool STATE[4] = { false, false, false, false};
 #define NUMPIXELS 4
 bool done = false;
 
@@ -31,6 +31,8 @@ void CheckPins() {
     if (digitalRead(BUTTON_PINS[i]) == LOW) {
       STATE[i] = true;
       Serial.println("flipped");
+    } else {
+      STATE[i] = false;
     }
   }
 }
@@ -47,12 +49,12 @@ void error() {
 }
 
 void activate() {
-  if (STATE[0] == true &&
-      STATE[1] == true &&
-      STATE[2] == true &&
-      STATE[3] == true &&) {
-      latch.write(90);
-      Serial.println("DONE");
+  if (digitalRead(BUTTON_PINS[0]) == HIGH &&
+      digitalRead(BUTTON_PINS[1]) == HIGH &&
+      digitalRead(BUTTON_PINS[2]) == HIGH &&
+      digitalRead(BUTTON_PINS[3]) == HIGH) {
+    latch.write(90);
+    Serial.println("DONE");
   }
 }
 
