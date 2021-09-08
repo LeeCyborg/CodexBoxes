@@ -1,7 +1,9 @@
-
 #include <Adafruit_NeoPixel.h>
-
 #include <Servo.h>
+#include <Stepper.h>
+const int stepsPerRevolution = 5000;
+Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+int stepCount = 0;
 Servo latch;
 const byte BUTTON_PINS[4] = { 2, 3, 4, 5};
 const byte LIGHT_PINS[4] = { 0, 1, 2, 3};
@@ -52,11 +54,23 @@ void activate() {
   if (digitalRead(BUTTON_PINS[0]) == HIGH &&
       digitalRead(BUTTON_PINS[1]) == HIGH &&
       digitalRead(BUTTON_PINS[2]) == HIGH &&
-      digitalRead(BUTTON_PINS[3]) == HIGH) {
-    latch.write(90);
+      digitalRead(BUTTON_PINS[3]) == HIGH && 
+      done == false) {
+    motor();
+    done = true
     Serial.println("DONE");
   }
 }
+void motor() {
+  Serial.begin(9600);
+  for (int i = 0; i < 2350; i++) {
+    myStepper.step(1);
+    Serial.print("steps:");
+    Serial.println(stepCount);
+    stepCount++;
+  }
+}
+
 
 
 

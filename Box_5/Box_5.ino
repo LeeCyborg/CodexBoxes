@@ -1,5 +1,9 @@
 #include <Adafruit_NeoPixel.h>
 #include <Servo.h>
+#include <Stepper.h>
+const int stepsPerRevolution = 5000;
+Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+int stepCount = 0;
 Servo latch;
 const byte KNOB_PINS[5] = { 0, 1, 2, 3, 4};
 const byte LIGHT_PINS[5] = { 0, 1, 2, 3, 4};
@@ -25,7 +29,7 @@ void CheckPins() {
   //Serial.println(analogRead(0));
   for (int i = 0; i < 5; i++) {
     if ((analogRead(KNOB_PINS[i]) <= (KEY[i] + tolerance)) &&
-      (analogRead(KNOB_PINS[i]) >= (KEY[i] - tolerance)))
+        (analogRead(KNOB_PINS[i]) >= (KEY[i] - tolerance)))
     {
       STATE[i] = true;
       Serial.println("yes");
@@ -52,9 +56,20 @@ void activate() {
       STATE[1] == true &&
       STATE[2] == true &&
       STATE[3] == true &&
-      STATE[4] == true) {
-    latch.write(90);
+      STATE[4] == true &&
+      done == false) {
+    motor();
+    done = true;
     Serial.println("DONE");
+  }
+}
+void motor() {
+  Serial.begin(9600);
+  for (int i = 0; i < 2350; i++) {
+    myStepper.step(1);
+    Serial.print("steps:");
+    Serial.println(stepCount);
+    stepCount++;
   }
 }
 
