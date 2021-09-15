@@ -6,7 +6,7 @@ Servo latch;
 #define buttonPin 2
 #include <Stepper.h>
 const int stepsPerRevolution = 5000;
-Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+Stepper myStepper(stepsPerRevolution, 13, 12, 11, 10);
 int stepCount = 0;
 bool state = false;
 
@@ -58,7 +58,7 @@ void flip() {
 void motor() {
   Serial.begin(9600);
   for (int i = 0; i < 2350; i++) {
-    myStepper.step(1);
+    myStepper.step(-1);
     Serial.print("steps:");
     Serial.println(stepCount);
     stepCount++;

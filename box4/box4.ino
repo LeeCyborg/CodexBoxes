@@ -2,7 +2,7 @@
 #include <Servo.h>
 #include <Stepper.h>
 const int stepsPerRevolution = 5000;
-Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+Stepper myStepper(stepsPerRevolution, 10, 11, 12, 13);
 int stepCount = 0;
 Servo latch;
 const byte KNOB_PINS[4] = { 0, 1, 2, 3};
@@ -56,7 +56,7 @@ void activate() {
       STATE[1] == true &&
       STATE[2] == true &&
       STATE[3] == true &&
-      done == false;) {
+      done == false) {
     motor();
     done = true;
     Serial.println("DONE");

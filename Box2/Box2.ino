@@ -2,7 +2,7 @@
 #include <Servo.h>
 #include <Stepper.h>
 const int stepsPerRevolution = 5000;
-Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+Stepper myStepper(stepsPerRevolution, 10, 11, 12, 13);
 int stepCount = 0;
 Servo latch;
 const byte BUTTON_PINS[6] = { 2, 3, 4, 7, 8, 5};
@@ -11,7 +11,7 @@ bool STATE[6] = { false, false, false, false, false, false};
 #define NUMPIXELS 6
 bool done = false;
 
-Adafruit_NeoPixel pixels(NUMPIXELS, 10, NEO_RGB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(NUMPIXELS, 9, NEO_RGB + NEO_KHZ800);
 void setup() {
   pixels.begin();
   latch.attach(9);
@@ -66,7 +66,7 @@ void activate() {
 void motor() {
   Serial.begin(9600);
   for (int i = 0; i < 2350; i++) {
-    myStepper.step(1);
+    myStepper.step(-1);
     Serial.print("steps:");
     Serial.println(stepCount);
     stepCount++;

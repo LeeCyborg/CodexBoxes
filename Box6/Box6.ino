@@ -2,7 +2,7 @@
 #include <Servo.h>
 #include <Stepper.h>
 const int stepsPerRevolution = 5000;
-Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+Stepper myStepper(stepsPerRevolution, 10, 11, 12, 13);
 int stepCount = 0;
 Servo latch;
 const byte BUTTON_PINS[4] = { 2, 3, 4, 5};
@@ -25,6 +25,7 @@ void setup() {
 void loop() {
   CheckPins();
   error();
+
   activate();
 }
 
@@ -51,13 +52,17 @@ void error() {
 }
 
 void activate() {
-  if (digitalRead(BUTTON_PINS[0]) == HIGH &&
-      digitalRead(BUTTON_PINS[1]) == HIGH &&
-      digitalRead(BUTTON_PINS[2]) == HIGH &&
-      digitalRead(BUTTON_PINS[3]) == HIGH && 
+  if (digitalRead(BUTTON_PINS[0]) == LOW &&
+      digitalRead(BUTTON_PINS[1]) == LOW &&
+      digitalRead(BUTTON_PINS[2]) == LOW &&
+      digitalRead(BUTTON_PINS[3]) == LOW &&
       done == false) {
+    for (int i = 0; i < 4; i++) {
+      pixels.setPixelColor(i, pixels.Color(0, 255, 0));
+      pixels.show();
+    }
     motor();
-    done = true
+    done = true;
     Serial.println("DONE");
   }
 }
