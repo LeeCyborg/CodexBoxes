@@ -8,7 +8,7 @@ Servo latch;
 const byte KNOB_PINS[5] = { 0, 1, 2, 3, 4};
 const byte LIGHT_PINS[5] = { 0, 1, 2, 3, 4};
 bool STATE[5] = { false, false, false, false, false};
-int KEY[5] = {400, 400, 500, 400, 500};
+int KEY[5] = {300, 300, 300, 500, 500};
 #define NUMPIXELS 5
 #define tolerance 50
 bool done = false;
@@ -18,15 +18,21 @@ void setup() {
   latch.attach(9);
   Serial.begin(9600);
   latch.write(0);
+  for (int i = 0; i < 5; i++) {
+    KEY[i] = analogRead(i) + 200;
+
+  }
 }
 void loop() {
+
   CheckPins();
   error();
   activate();
 }
 
 void CheckPins() {
-  //Serial.println(analogRead(0));
+
+  Serial.println(analogRead(0));
   for (int i = 0; i < 5; i++) {
     if ((analogRead(KNOB_PINS[i]) <= (KEY[i] + tolerance)) &&
         (analogRead(KNOB_PINS[i]) >= (KEY[i] - tolerance)))
