@@ -5,7 +5,7 @@ const int stepsPerRevolution = 5000;
 Stepper myStepper(stepsPerRevolution, 10, 11, 12, 13);
 int stepCount = 0;
 Servo latch;
-const byte BUTTON_PINS[4] = { 2, 3, 4, 5};
+const byte BUTTON_PINS[4] = { 2, 4, 5, 3];
 const byte LIGHT_PINS[4] = { 0, 1, 2, 3};
 bool STATE[4] = { false, false, false, false};
 #define NUMPIXELS 4
